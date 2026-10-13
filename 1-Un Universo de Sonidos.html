@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <!-- Etiquetas Meta de Tratamiento Dirigido a Niños (COPPA / GDPR Protection) -->
+    <meta name="audience" content="children, students">
+    <meta name="rating" content="general">
+    <meta name="coppa" content="child-directed">
+    <meta name="google-adsense-platform" content="child-directed">
+
+    <title>Un Universo de Sonidos - 6.º Primaria</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for High Readability on Class Projectors -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Fredoka', 'sans-serif'],
+                        body: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        pdiYellow: '#D97706',
+                        pdiPink: '#D91B5C',
+                        pdiTeal: '#059669',
+                        pdiBlue: '#0284C7',
+                        pdiDarkBlue: '#0F172A',
+                        pdiPurple: '#7C3AED',
+                        pdiOrange: '#EA580C',
+                        pdiBgLight: '#F8FAFC',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        .font-heading {
+            font-family: 'Fredoka', sans-serif;
+        }
+        /* PDI Font Zooming Levels for Projection */
+        body.zoom-sm { font-size: 1.15rem; }
+        body.zoom-md { font-size: 1.4rem; }
+        body.zoom-lg { font-size: 1.65rem; }
+
+        /* Card Shadow and Border Effects */
+        .card-pdi {
+            transition: all 0.25s ease-in-out;
+            box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+        }
+        .card-pdi:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Pulse effect for play buttons */
+        .btn-play-pulse {
+            position: relative;
+        }
+        .btn-play-pulse::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 9999px;
+            background: inherit;
+            opacity: 0.35;
+            z-index: -1;
+            animation: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            100% { transform: scale(1.35); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="zoom-md min-h-screen flex flex-col antialiased selection:bg-pdiPink selection:text-white pb-20 bg-slate-100 text-slate-900">
+
+    <header class="sticky top-0 z-40 bg-white border-b-4 border-amber-500 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Main Title & Logo -->
+            <div class="flex items-center space-x-3">
+                <span class="p-3 bg-gradient-to-tr from-amber-500 to-rose-500 rounded-2xl shadow-md text-white text-3xl flex items-center justify-center">
+                    <i class="fa-solid fa-music"></i>
+                </span>
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-extrabold font-heading text-slate-900 tracking-wide">
+                        Un Universo de Sonidos
+                    </h1>
+                    <p class="text-xs md:text-sm text-indigo-700 font-bold tracking-wider uppercase">
+                        6.º Primaria • Educación Musical
+                    </p>
+                </div>
+            </div>
+
+            <!-- PDI Accessibility Controls -->
+            <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-1 sm:space-x-2 bg-slate-200/80 p-1.5 rounded-2xl border border-slate-300 shadow-inner">
+                    <span class="text-xs text-slate-700 font-extrabold px-1.5 uppercase hidden sm:inline">PDI Letra:</span>
+                    <button onclick="setZoom('sm')" id="btn-zoom-sm" title="Letra Normal" class="px-2.5 py-1 rounded-xl font-extrabold bg-white text-slate-700 border border-slate-300 hover:bg-sky-100 transition active:scale-95 text-base shadow-sm">
+                        A-
+                    </button>
+                    <button onclick="setZoom('md')" id="btn-zoom-md" title="Letra Mediana" class="px-2.5 py-1 rounded-xl font-extrabold bg-sky-600 text-white border-2 border-amber-400 transition active:scale-95 text-base shadow-sm">
+                        A
+                    </button>
+                    <button onclick="setZoom('lg')" id="btn-zoom-lg" title="Letra Gigante" class="px-2.5 py-1 rounded-xl font-extrabold bg-white text-slate-700 border border-slate-300 hover:bg-sky-100 transition active:scale-95 text-base shadow-sm">
+                        A+
+                    </button>
+                    <div class="h-6 w-px bg-slate-400 mx-1"></div>
+                    <button onclick="toggleFullscreen()" title="Pantalla Completa" class="p-2 rounded-xl bg-purple-700 text-white hover:bg-purple-800 transition active:scale-95 text-base shadow flex items-center gap-1">
+                        <i class="fa-solid fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Navigation Bar -->
+        <nav class="bg-slate-900 text-white px-4 py-2 overflow-x-auto shadow-inner">
+            <div class="max-w-7xl mx-auto flex items-center justify-center min-w-max gap-2 sm:gap-4">
+                <button onclick="scrollToSection('agrupaciones')" class="px-4 py-2 rounded-xl bg-purple-900/80 hover:bg-purple-700 text-purple-100 font-heading font-bold text-lg border border-purple-400/40 transition flex items-center gap-2 cursor-pointer active:scale-95">
+                    <i class="fa-solid fa-users-line text-amber-300"></i>
+                    Las Agrupaciones
+                </button>
+                <button onclick="scrollToSection('voces')" class="px-4 py-2 rounded-xl bg-rose-900/80 hover:bg-rose-700 text-rose-100 font-heading font-bold text-lg border border-rose-400/40 transition flex items-center gap-2 cursor-pointer active:scale-95">
+                    <i class="fa-solid fa-microphone-lines text-amber-300"></i>
+                    Los Coros y la Voz
+                </button>
+                <button onclick="scrollToSection('formas')" class="px-4 py-2 rounded-xl bg-emerald-900/80 hover:bg-emerald-700 text-emerald-100 font-heading font-bold text-lg border border-emerald-400/40 transition flex items-center gap-2 cursor-pointer active:scale-95">
+                    <i class="fa-solid fa-compact-disc text-amber-300"></i>
+                    Las Formas Musicales
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-16">
+
+        <!-- Intro Unit Card -->
+        <section class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 rounded-3xl p-6 md:p-10 shadow-xl relative overflow-hidden text-white border-4 border-amber-300">
+            <div class="absolute -right-10 -bottom-10 opacity-15 text-white text-9xl pointer-events-none">
+                <i class="fa-solid fa-record-vinyl"></i>
+            </div>
+            <div class="relative z-10 max-w-4xl">
+                <div class="inline-flex items-center gap-2 bg-slate-900 text-amber-300 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wider mb-4 border border-amber-400/30 shadow">
+                    <i class="fa-solid fa-circle-info"></i> Introducción de la Unidad
+                </div>
+                <!-- Verbatim Content Text -->
+                <p class="text-2xl md:text-3xl leading-relaxed font-bold drop-shadow-sm">
+                    La música nos rodea de múltiples formas: desde el canto de una sola persona hasta el imponente sonido de una gran orquesta. Para comprenderla mejor, dividimos sus elementos en tres grandes bloques: quiénes la interpretan, cómo se organiza la voz humana y qué estructura tienen las piezas.
+                </p>
+            </div>
+        </section>
+
+        <!-- Intro Video Button Card -->
+        <div class="flex justify-center -mt-6">
+            <div class="bg-white border-4 border-amber-400 rounded-3xl p-6 shadow-xl max-w-2xl w-full flex items-center justify-between gap-4 card-pdi">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow">
+                        <i class="fa-solid fa-film"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold font-heading text-slate-900">Vídeo Introductorio</h3>
+                        <p class="text-base text-slate-600 font-semibold">Introducción visual de la unidad</p>
+                    </div>
+                </div>
+                <button onclick="playVideo('mdqfcHUWOWM', 'Universo de Sonidos - Vídeo Introductorio', 'Introducción de la Unidad')" 
+                        class="btn-play-pulse bg-amber-500 hover:bg-amber-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95 flex-shrink-0"
+                        aria-label="Reproducir vídeo introductorio en YouTube"
+                        title="Ver vídeo introductorio">
+                    <i class="fa-solid fa-play ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: LAS AGRUPACIONES MUSICALES -->
+        <section id="agrupaciones" class="space-y-8 scroll-mt-36">
+            <!-- Section Header Banner -->
+            <div class="bg-gradient-to-r from-purple-700 to-indigo-800 rounded-3xl p-6 shadow-lg border-l-8 border-amber-400 flex items-center justify-between text-white">
+                <div>
+                    <span class="text-amber-300 text-sm font-bold uppercase tracking-widest block mb-1">Bloque I</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold font-heading">
+                        Las Agrupaciones Musicales
+                    </h2>
+                </div>
+                <div class="hidden md:flex text-5xl text-amber-300 opacity-90 pr-4">
+                    <i class="fa-solid fa-icons"></i>
+                </div>
+            </div>
+
+            <!-- Content Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Solista -->
+                <div class="bg-white border-3 border-purple-300 hover:border-purple-600 rounded-3xl p-6 card-pdi flex flex-col justify-between relative group">
+                    <div>
+                        <div class="w-12 h-12 bg-purple-100 text-purple-800 rounded-2xl flex items-center justify-center text-2xl mb-4 font-extrabold border border-purple-300">
+                            1
+                        </div>
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-purple-700 font-heading text-2xl md:text-3xl block mb-2">Solista:</strong>
+                            Músico o cantante que interpreta una obra de forma individual.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Música de cámara -->
+                <div class="bg-white border-3 border-purple-300 hover:border-purple-600 rounded-3xl p-6 card-pdi flex flex-col justify-between relative group">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-800 rounded-2xl flex items-center justify-center text-2xl mb-4 font-extrabold border border-purple-300">
+                            2
+                        </div>
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-purple-700 font-heading text-2xl md:text-3xl block mb-2">Música de cámara:</strong>
+                            Agrupaciones reducidas donde cada integrante toca una parte única (ej. dúo, trío, cuarteto).
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('BsVSK2GpBdU', 'Cuarteto de Cuerda Nº 13 en Si bemol mayor, Op. 130 (L. v. Beethoven)', 'Brentano String Quartet')" 
+                                class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                aria-label="Reproducir audición de Música de cámara en YouTube"
+                                title="Escuchar audición">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Orquesta sinfónica -->
+                <div class="bg-white border-3 border-purple-300 hover:border-purple-600 rounded-3xl p-6 card-pdi flex flex-col justify-between relative group">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-800 rounded-2xl flex items-center justify-center text-2xl mb-4 font-extrabold border border-purple-300">
+                            3
+                        </div>
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-purple-700 font-heading text-2xl md:text-3xl block mb-2">Orquesta sinfónica:</strong>
+                            Gran agrupación compuesta por las familias de cuerda, viento y percusión, dirigida por un director.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('SSypujlLlNI', 'Sinfonía Nº 5 en do menor, Op. 67 (L. v. Beethoven)', 'Orquesta Sinfónica Simón Bolívar (Dir. Gustavo Dudamel)')" 
+                                class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                aria-label="Reproducir audición de Orquesta sinfónica en YouTube"
+                                title="Escuchar audición">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Banda sinfónica -->
+                <div class="bg-white border-3 border-purple-300 hover:border-purple-600 rounded-3xl p-6 card-pdi flex flex-col justify-between relative group">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-800 rounded-2xl flex items-center justify-center text-2xl mb-4 font-extrabold border border-purple-300">
+                            4
+                        </div>
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-purple-700 font-heading text-2xl md:text-3xl block mb-2">Banda sinfónica:</strong>
+                            Agrupación donde destacan principalmente los instrumentos de viento y percusión.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('frdaarTewIk', 'Amparito Roca (Pasodoble) (Jaime Texidor)', 'Banda Simfònica d\'Algemesí')" 
+                                class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                aria-label="Reproducir audición de Banda sinfónica en YouTube"
+                                title="Escuchar audición">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Big band -->
+                <div class="bg-white border-3 border-purple-300 hover:border-purple-600 rounded-3xl p-6 card-pdi flex flex-col justify-between relative group">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-800 rounded-2xl flex items-center justify-center text-2xl mb-4 font-extrabold border border-purple-300">
+                            5
+                        </div>
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-purple-700 font-heading text-2xl md:text-3xl block mb-2">Big band:</strong>
+                            Formación de origen estadounidense típica del jazz, integrada por saxofones, trompetas, trombones y una sección rítmica (piano, contrabajo, batería).
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('f1WvT8kQ_84', 'Sing, Sing, Sing (With a Swing) (Louis Prima / Benny Goodman)', 'BBC Proms Big Band')" 
+                                class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                aria-label="Reproducir audición de Big band en YouTube"
+                                title="Escuchar audición">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Coro -->
+                <div class="bg-white border-3 border-purple-300 hover:border-purple-600 rounded-3xl p-6 card-pdi flex flex-col justify-between relative group">
+                    <div class="mb-6">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-800 rounded-2xl flex items-center justify-center text-2xl mb-4 font-extrabold border border-purple-300">
+                            6
+                        </div>
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-purple-700 font-heading text-2xl md:text-3xl block mb-2">Coro:</strong>
+                            Grupo organizado de personas que cantan juntas. Cuando cantan sin ningún acompañamiento instrumental, se llama interpretación a capella.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('3MteSlpxCpo', 'Medley Daft Punk (Arreglo: Pentatonix)', 'Pentatonix')" 
+                                class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                aria-label="Reproducir audición de Canto A Cappella en YouTube"
+                                title="Escuchar audición">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: LOS COROS Y LA VOZ HUMANA -->
+        <section id="voces" class="space-y-10 scroll-mt-36">
+            <!-- Section Header Banner -->
+            <div class="bg-gradient-to-r from-rose-600 to-pink-700 rounded-3xl p-6 shadow-lg border-l-8 border-amber-400 flex items-center justify-between text-white">
+                <div>
+                    <span class="text-amber-300 text-sm font-bold uppercase tracking-widest block mb-1">Bloque II</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold font-heading">
+                        Los Coros y la Voz Humana
+                    </h2>
+                </div>
+                <div class="hidden md:flex text-5xl text-amber-300 opacity-90 pr-4">
+                    <i class="fa-solid fa-microphone-lines"></i>
+                </div>
+            </div>
+
+            <!-- Verbatim Intro Text -->
+            <div class="bg-rose-50 border-3 border-rose-300 rounded-3xl p-6 md:p-8 shadow-sm">
+                <p class="text-2xl md:text-3xl font-bold text-rose-950 leading-snug">
+                    Los conjuntos vocales se organizan según la cantidad de cantantes y el tipo de voz que poseen:
+                </p>
+            </div>
+
+            <!-- Por el número de integrantes -->
+            <div class="space-y-4">
+                <h3 class="text-2xl md:text-3xl font-extrabold font-heading text-rose-800 bg-white border-2 border-rose-200 px-6 py-3 rounded-2xl inline-block shadow-sm">
+                    Por el número de integrantes:
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Solista -->
+                    <div class="bg-white border-3 border-rose-200 hover:border-rose-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                <strong class="text-rose-700 font-heading text-2xl md:text-3xl block mb-1">Solista:</strong>
+                                Una sola voz.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button onclick="playVideo('cWc7vYjgnTs', 'Aria &quot;Nessun Dorma&quot; de Turandot (Giacomo Puccini)', 'Luciano Pavarotti (Tenor)')" 
+                                    class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                    aria-label="Reproducir audición de Música vocal solista en YouTube">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Coro de cámara -->
+                    <div class="bg-white border-3 border-rose-200 hover:border-rose-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                <strong class="text-rose-700 font-heading text-2xl md:text-3xl block mb-1">Coro de cámara:</strong>
+                                Grupo pequeño y especializado (de 10 a 25 cantantes).
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button onclick="playVideo('hKgUxqXoc9M', 'Lux Aeterna (Arreglo coral sobre Nimrod / Variaciones Enigma de E. Elgar)', 'VOCES8')" 
+                                    class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                    aria-label="Reproducir audición de Coro de cámara en YouTube">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Coral -->
+                    <div class="bg-white border-3 border-rose-200 hover:border-rose-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                <strong class="text-rose-700 font-heading text-2xl md:text-3xl block mb-1">Coral:</strong>
+                                Agrupación de tamaño medio (de 30 a 60 cantantes).
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button onclick="playVideo('ChygZLpJDNE', 'Himno a la Alegría (4º Mov. Sinfonía Nº 9 - L. v. Beethoven)', 'West-Eastern Divan Orchestra y Coro (Dir. Daniel Barenboim)')" 
+                                    class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                    aria-label="Reproducir audición de Coral en YouTube">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Coro sinfónico -->
+                    <div class="bg-white border-3 border-rose-200 hover:border-rose-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                <strong class="text-rose-700 font-heading text-2xl md:text-3xl block mb-1">Coro sinfónico:</strong>
+                                Gran masa vocal que puede superar los 100 integrantes.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button onclick="playVideo('EJC-_j3SnXk', '&quot;O Fortuna&quot; (Carmina Burana - Carl Orff)', 'Gran Coro y Orquesta Sinfónica')" 
+                                    class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                    aria-label="Reproducir audición de Coro sinfónico en YouTube">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Por el tipo de voces -->
+            <div class="space-y-4 pt-4">
+                <h3 class="text-2xl md:text-3xl font-extrabold font-heading text-rose-800 bg-white border-2 border-rose-200 px-6 py-3 rounded-2xl inline-block shadow-sm">
+                    Por el tipo de voces:
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Coro mixto -->
+                    <div class="bg-white border-3 border-rose-200 hover:border-rose-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                <strong class="text-rose-700 font-heading text-2xl md:text-3xl block mb-1">Coro mixto:</strong>
+                                Combina voces masculinas y femeninas.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button onclick="playVideo('ChygZLpJDNE', 'Himno a la Alegría (4º Mov. Sinfonía Nº 9 - L. v. Beethoven)', 'West-Eastern Divan Orchestra y Coro (Dir. Daniel Barenboim)')" 
+                                    class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                    aria-label="Reproducir audición de Coro mixto en YouTube">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Coro de voces iguales -->
+                    <div class="bg-white border-3 border-rose-200 hover:border-rose-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                <strong class="text-rose-700 font-heading text-2xl md:text-3xl block mb-1">Coro de voces iguales:</strong>
+                                Integrado únicamente por voces de la misma categoría (solo hombres, solo mujeres o solo niños).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Voces blancas -->
+                    <div class="bg-white border-3 border-rose-200 hover:border-rose-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                <strong class="text-rose-700 font-heading text-2xl md:text-3xl block mb-1">Voces blancas:</strong>
+                                Coros formados por niños y niñas con voces agudas y timbres claros.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200 flex justify-end">
+                            <button onclick="playVideo('Y5bWxVRRJT0', '&quot;Vois sur ton chemin&quot; (BSO Los Chicos del Coro - Bruno Coulais)', 'Les Choristes (En concert en París)')" 
+                                    class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-14 h-14 rounded-full flex items-center justify-center text-xl shadow-md transition transform hover:scale-110 active:scale-95"
+                                    aria-label="Reproducir audición de Voces blancas en YouTube">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLASIFICACIÓN DE LAS VOCES HUMANAS TABLA -->
+            <div class="pt-6">
+                <div class="bg-white border-4 border-amber-400 rounded-3xl p-6 md:p-8 shadow-xl space-y-6">
+                    <h3 class="text-2xl md:text-4xl font-extrabold font-heading text-slate-900 text-center uppercase tracking-wide">
+                        Clasificación de las Voces Humanas
+                    </h3>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <!-- Voces Femeninas y de Niños -->
+                        <div class="bg-pink-50/80 rounded-2xl p-6 border-3 border-pink-300 space-y-4">
+                            <h4 class="text-2xl md:text-3xl font-extrabold font-heading text-pink-800 border-b-2 border-pink-300 pb-3 flex items-center gap-3">
+                                <i class="fa-solid fa-venus"></i> Voces Femeninas y de Niños
+                            </h4>
+
+                            <!-- Soprano -->
+                            <div class="bg-white p-4 rounded-xl border-2 border-pink-200 flex items-center justify-between shadow-sm">
+                                <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                    <strong class="text-pink-700 font-heading text-2xl">Soprano:</strong> La más aguda
+                                </p>
+                                <button onclick="playVideo('YuBeBjqKSGQ', 'Aria de la Reina de la Noche &quot;Der Hölle Rache&quot; (La Flauta Mágica - W. A. Mozart)', 'Diana Damrau')" 
+                                        class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm transition transform hover:scale-110 active:scale-95"
+                                        aria-label="Escuchar Soprano en YouTube">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </button>
+                            </div>
+
+                            <!-- Mezzosoprano -->
+                            <div class="bg-white p-4 rounded-xl border-2 border-pink-200 flex items-center justify-between shadow-sm">
+                                <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                    <strong class="text-pink-700 font-heading text-2xl">Mezzosoprano:</strong> La voz intermedia
+                                </p>
+                                <button onclick="playVideo('RK3b0jje9DU', '&quot;Habanera: L\'amour est un oiseau rebelle&quot; (Carmen - G. Bizet)', 'Elīna Garanča')" 
+                                        class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm transition transform hover:scale-110 active:scale-95"
+                                        aria-label="Escuchar Mezzosoprano en YouTube">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </button>
+                            </div>
+
+                            <!-- Contralto -->
+                            <div class="bg-white p-4 rounded-xl border-2 border-pink-200 flex items-center justify-between shadow-sm">
+                                <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                    <strong class="text-pink-700 font-heading text-2xl">Contralto:</strong> La más grave
+                                </p>
+                                <button onclick="playVideo('Jeil9S2exIU', '&quot;Erbarme dich, mein Gott&quot; (Pasión según San Mateo - J. S. Bach)', 'Nathalie Stutzmann')" 
+                                        class="btn-play-pulse bg-rose-600 hover:bg-rose-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm transition transform hover:scale-110 active:scale-95"
+                                        aria-label="Escuchar Contralto en YouTube">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Voces Masculinas -->
+                        <div class="bg-sky-50/80 rounded-2xl p-6 border-3 border-sky-300 space-y-4">
+                            <h4 class="text-2xl md:text-3xl font-extrabold font-heading text-sky-800 border-b-2 border-sky-300 pb-3 flex items-center gap-3">
+                                <i class="fa-solid fa-mars"></i> Voces Masculinas
+                            </h4>
+
+                            <!-- Tenor -->
+                            <div class="bg-white p-4 rounded-xl border-2 border-sky-200 flex items-center justify-between shadow-sm">
+                                <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                    <strong class="text-sky-700 font-heading text-2xl">Tenor:</strong> La más aguda
+                                </p>
+                                <button onclick="playVideo('cWc7vYjgnTs', '&quot;Nessun Dorma&quot; (Turandot - G. Puccini)', 'Luciano Pavarotti')" 
+                                        class="btn-play-pulse bg-sky-600 hover:bg-sky-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm transition transform hover:scale-110 active:scale-95"
+                                        aria-label="Escuchar Tenor en YouTube">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </button>
+                            </div>
+
+                            <!-- Barítono -->
+                            <div class="bg-white p-4 rounded-xl border-2 border-sky-200 flex items-center justify-between shadow-sm">
+                                <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                    <strong class="text-sky-700 font-heading text-2xl">Barítono:</strong> La voz intermedia
+                                </p>
+                                <button onclick="playVideo('-ipb9xbXSAY', '&quot;Largo al factotum&quot; (El Barbero de Sevilla - G. Rossini)', 'Peter Mattei')" 
+                                        class="btn-play-pulse bg-sky-600 hover:bg-sky-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm transition transform hover:scale-110 active:scale-95"
+                                        aria-label="Escuchar Barítono en YouTube">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </button>
+                            </div>
+
+                            <!-- Bajo -->
+                            <div class="bg-white p-4 rounded-xl border-2 border-sky-200 flex items-center justify-between shadow-sm">
+                                <p class="text-xl md:text-2xl font-semibold text-slate-800">
+                                    <strong class="text-sky-700 font-heading text-2xl">Bajo:</strong> La más grave
+                                </p>
+                                <button onclick="playVideo('ZLlpoR_qMDs', '&quot;Madamina, il catalogo è questo&quot; (Don Giovanni - W. A. Mozart)', 'Ferruccio Furlanetto')" 
+                                        class="btn-play-pulse bg-sky-600 hover:bg-sky-700 text-white w-12 h-12 rounded-full flex items-center justify-center text-lg shadow-sm transition transform hover:scale-110 active:scale-95"
+                                        aria-label="Escuchar Bajo en YouTube">
+                                    <i class="fa-solid fa-play ml-0.5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECCIÓN 3: LAS FORMAS MUSICALES -->
+        <section id="formas" class="space-y-8 scroll-mt-36">
+            <!-- Section Header Banner -->
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-3xl p-6 shadow-lg border-l-8 border-amber-400 flex items-center justify-between text-white">
+                <div>
+                    <span class="text-amber-300 text-sm font-bold uppercase tracking-widest block mb-1">Bloque III</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold font-heading">
+                        Las Formas Musicales
+                    </h2>
+                </div>
+                <div class="hidden md:flex text-5xl text-amber-300 opacity-90 pr-4">
+                    <i class="fa-solid fa-compact-disc"></i>
+                </div>
+            </div>
+
+            <!-- Verbatim Intro Text -->
+            <div class="bg-emerald-50 border-3 border-emerald-300 rounded-3xl p-6 md:p-8 shadow-sm">
+                <p class="text-2xl md:text-3xl font-bold text-emerald-950 leading-snug">
+                    Las obras musicales siguen estructuras específicas para dar orden a la creatividad de los compositores:
+                </p>
+            </div>
+
+            <!-- Content Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Sonata -->
+                <div class="bg-white border-3 border-emerald-200 hover:border-emerald-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                    <div class="mb-6">
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-emerald-700 font-heading text-2xl md:text-3xl block mb-2">Sonata:</strong>
+                            Obra instrumental escrita para uno o dos instrumentos solistas.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('VHwoypAY52k', 'Sonata para piano Nº 14 &quot;Claro de Luna&quot; (L. v. Beethoven)', 'Daniel Barenboim (Concierto en directo)')" 
+                                class="btn-play-pulse bg-emerald-600 hover:bg-emerald-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95 font-bold"
+                                aria-label="Reproducir audición de Sonata en YouTube">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sinfonía -->
+                <div class="bg-white border-3 border-emerald-200 hover:border-emerald-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                    <div class="mb-6">
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-emerald-700 font-heading text-2xl md:text-3xl block mb-2">Sinfonía:</strong>
+                            Gran composición instrumental dividida en varios movimientos, escrita para la orquesta sinfónica.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('SSypujlLlNI', 'Sinfonía Nº 5 en do menor, Op. 67 (L. v. Beethoven)', 'Orquesta Sinfónica Simón Bolívar')" 
+                                class="btn-play-pulse bg-emerald-600 hover:bg-emerald-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95 font-bold"
+                                aria-label="Reproducir audición de Sinfonía en YouTube">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Concierto -->
+                <div class="bg-white border-3 border-emerald-200 hover:border-emerald-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                    <div class="mb-6">
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-emerald-700 font-heading text-2xl md:text-3xl block mb-2">Concierto:</strong>
+                            Obra donde un instrumento solista es acompñadado por toda la orquesta.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('E2KXHAo0464', 'Concierto de Aranjuez - Adagio (Joaquín Rodrigo)', 'Guitarra solista y Orquesta Sinfónica')" 
+                                class="btn-play-pulse bg-emerald-600 hover:bg-emerald-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95 font-bold"
+                                aria-label="Reproducir audición de Concierto en YouTube">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Suite -->
+                <div class="bg-white border-3 border-emerald-200 hover:border-emerald-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                    <div class="mb-6">
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-emerald-700 font-heading text-2xl md:text-3xl block mb-2">Suite:</strong>
+                            Serie o colección de varias piezas breves o danzas contrastantes que se tocan seguidas.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('4rgSzQwe5DQ', 'Suite para Violonchelo Nº 1 en Sol Mayor - Preludio (J. S. Bach)', 'Violonchelo solista')" 
+                                class="btn-play-pulse bg-emerald-600 hover:bg-emerald-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95 font-bold"
+                                aria-label="Reproducir audición de Suite en YouTube">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Música programática -->
+                <div class="bg-white border-3 border-emerald-200 hover:border-emerald-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                    <div class="mb-6">
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-emerald-700 font-heading text-2xl md:text-3xl block mb-2">Música programática:</strong>
+                            Música instrumental que busca describir un argumento, poema, paisaje o idea externa.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('cXOanvv4plU', '&quot;Marte, el portador de la guerra&quot; de Los Planetas (Gustav Holst)', 'Orquesta Sinfónica')" 
+                                class="btn-play-pulse bg-emerald-600 hover:bg-emerald-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95 font-bold"
+                                aria-label="Reproducir audición de Música programática en YouTube">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Poema sinfónico -->
+                <div class="bg-white border-3 border-emerald-200 hover:border-emerald-500 rounded-3xl p-6 card-pdi flex flex-col justify-between">
+                    <div class="mb-6">
+                        <p class="text-xl md:text-2xl font-semibold leading-relaxed text-slate-800">
+                            <strong class="text-emerald-700 font-heading text-2xl md:text-3xl block mb-2">Poema sinfónico:</strong>
+                            Obra de música programática en un solo movimiento que cuenta una historia inspirada en la literatura o el arte.
+                        </p>
+                    </div>
+                    <!-- Action Button without text -->
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button onclick="playVideo('Y9iDOt2WbjY', 'Preludio a la siesta de un fauno (Claude Debussy)', 'Orquesta Sinfónica')" 
+                                class="btn-play-pulse bg-emerald-600 hover:bg-emerald-700 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-md transition transform hover:scale-110 active:scale-95 font-bold"
+                                aria-label="Reproducir audición de Poema sinfónico en YouTube">
+                            <i class="fa-solid fa-play ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- VIDEO AUDITION MODAL OVERLAY -->
+    <div id="videoModal" class="fixed inset-0 z-50 hidden bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-fade-in">
+        <div class="bg-white border-4 border-amber-400 rounded-3xl w-full max-w-5xl shadow-2xl flex flex-col overflow-hidden max-h-[92vh]">
+            
+            <!-- Modal Header -->
+            <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between border-b border-slate-800">
+                <div class="flex items-center space-x-3 pr-4 overflow-hidden">
+                    <span class="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center text-white text-xl flex-shrink-0 shadow">
+                        <i class="fa-brands fa-youtube"></i>
+                    </span>
+                    <div class="truncate">
+                        <h3 id="modalTitle" class="text-xl md:text-2xl font-bold font-heading text-amber-300 truncate">
+                            Título de la Obra
+                        </h3>
+                        <p id="modalPerformer" class="text-sm md:text-base text-sky-300 font-semibold truncate">
+                            Intérprete
+                        </p>
+                    </div>
+                </div>
+                <!-- Close Button -->
+                <button onclick="closeVideoModal()" class="w-12 h-12 bg-slate-800 hover:bg-rose-600 text-white rounded-full flex items-center justify-center text-2xl transition flex-shrink-0">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- YouTube Video Embed Player Container -->
+            <div class="relative w-full aspect-video bg-black flex items-center justify-center">
+                <iframe id="youtubeIframe" 
+                        class="w-full h-full border-0" 
+                        title="YouTube video player"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+
+            <!-- Modal Footer Links with Direct YouTube Button -->
+            <div class="bg-slate-100 px-6 py-4 flex flex-wrap items-center justify-between gap-4 border-t border-slate-300">
+                <div class="text-slate-700 text-sm md:text-base font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-amber-600 text-lg"></i>
+                    <span>Si el reproductor indica restricciones del autor, pulsa el botón para ver directamente en YouTube.</span>
+                </div>
+                <a id="externalYoutubeLink" href="#" target="_blank" rel="noopener noreferrer" 
+                   class="px-6 py-3 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-lg shadow-md transition flex items-center gap-3 transform hover:scale-105 active:scale-95">
+                    <i class="fa-brands fa-youtube text-2xl"></i>
+                    <span>Abrir vídeo en YouTube</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Zoom Font Size Controls for Interactive Whiteboards (PDI)
+        function setZoom(level) {
+            let scale = '120%';
+            if (level === 'sm') scale = '100%';
+            if (level === 'md') scale = '120%';
+            if (level === 'lg') scale = '140%';
+            
+            // Scaled dynamically on root element so rem values adjust proportionately
+            document.documentElement.style.fontSize = scale;
+
+            // Update UI Button active highlights
+            ['sm', 'md', 'lg'].forEach(l => {
+                const btn = document.getElementById('btn-zoom-' + l);
+                if (btn) {
+                    if (l === level) {
+                        btn.className = "px-2.5 py-1 rounded-xl font-extrabold bg-sky-600 text-white border-2 border-amber-400 transition active:scale-95 text-base shadow-sm";
+                    } else {
+                        btn.className = "px-2.5 py-1 rounded-xl font-extrabold bg-white text-slate-700 border border-slate-300 hover:bg-sky-100 transition active:scale-95 text-base shadow-sm";
+                    }
+                }
+            });
+        }
+
+        // Smooth scroll to section accounting for dynamic sticky header height and font zoom
+        function scrollToSection(id) {
+            const target = document.getElementById(id);
+            if (!target) return;
+            
+            const header = document.querySelector('header');
+            const headerHeight = header ? header.offsetHeight : 120;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = targetPosition - headerHeight - 16; // 16px extra padding above target
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Fullscreen Toggle for classroom presentation mode with cross-browser fallback
+        function toggleFullscreen() {
+            const doc = document.documentElement;
+            const isFull = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+
+            try {
+                if (!isFull) {
+                    if (doc.requestFullscreen) {
+                        doc.requestFullscreen();
+                    } else if (doc.webkitRequestFullscreen) {
+                        doc.webkitRequestFullscreen();
+                    } else if (doc.mozRequestFullScreen) {
+                        doc.mozRequestFullScreen();
+                    } else if (doc.msRequestFullscreen) {
+                        doc.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                }
+            } catch (err) {
+                console.log("No se pudo cambiar el modo pantalla completa:", err);
+            }
+        }
+
+        // Play Video Modal Handler
+        function playVideo(youtubeId, title, performer) {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('youtubeIframe');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalPerformer = document.getElementById('modalPerformer');
+            const externalLink = document.getElementById('externalYoutubeLink');
+
+            // Direct YouTube URL for backup
+            const directUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
+
+            // Domain youtube-nocookie.com to avoid cookie-based embed blocking
+            let embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`;
+
+            // Dynamic origin validation (only attached when running on http/https with valid origin)
+            try {
+                if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') &&
+                    window.location.origin && window.location.origin !== 'null') {
+                    embedUrl += `&origin=${encodeURIComponent(window.location.origin)}`;
+                }
+            } catch (err) {
+                console.warn('No se pudo determinar el origen dinámico:', err);
+            }
+
+            iframe.src = embedUrl;
+            
+            // Set text descriptions
+            modalTitle.textContent = title;
+            modalPerformer.textContent = performer;
+            externalLink.href = directUrl;
+
+            // Show Modal
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // prevent background scrolling
+        }
+
+        // Close Video Modal Handler
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('youtubeIframe');
+
+            iframe.src = ''; // stop video playback
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // restore scrolling
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
+    </script>
+</body>
+</html>
